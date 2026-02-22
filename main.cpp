@@ -1,5 +1,15 @@
 #include <iostream>
+#include <vector>
 using namespace std;
+
+struct Appliance
+{
+    string name;
+    double watts;
+    double hours;
+};
+
+vector<Appliance> appliances;
 
 void showMenu()
 {
@@ -13,6 +23,25 @@ void showMenu()
     cout << "Choose option: ";
 }
 
+void registerAppliance()
+{
+    Appliance a;
+
+    cout << "Enter appliance name: ";
+    getline(cin, a.name);
+
+    cout << "Enter power (watts): ";
+    cin >> a.watts;
+
+    cout << "Enter hours used per day: ";
+    cin >> a.hours;
+    cin.ignore();
+
+    appliances.push_back(a);
+
+    cout << "Appliance added successfully.\n";
+}
+
 int main()
 {
     string input;
@@ -22,7 +51,11 @@ int main()
         showMenu();
         getline(cin, input);
 
-        if (input == "6")
+        if (input == "1")
+        {
+            registerAppliance();
+        }
+        else if (input == "6")
         {
             cout << "Goodbye!\n";
             break;
