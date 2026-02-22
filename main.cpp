@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 struct Appliance
@@ -42,6 +43,28 @@ void registerAppliance()
     cout << "Appliance added successfully.\n";
 }
 
+void viewAppliances()
+{
+    if (appliances.empty())
+    {
+        cout << "No appliances registered.\n";
+        return;
+    }
+
+    cout << fixed << setprecision(2);
+
+    for (int i = 0; i < appliances.size(); i++)
+    {
+        double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
+
+        cout << i + 1 << ". "
+             << appliances[i].name << " | "
+             << appliances[i].watts << "W | "
+             << appliances[i].hours << " hrs | "
+             << kwh << " kWh/day\n";
+    }
+}
+
 int main()
 {
     string input;
@@ -54,6 +77,10 @@ int main()
         if (input == "1")
         {
             registerAppliance();
+        }
+        else if (input == "2")
+        {
+            viewAppliances();
         }
         else if (input == "6")
         {
