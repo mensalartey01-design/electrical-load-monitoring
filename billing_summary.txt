@@ -1,0 +1,10 @@
+
+----------------------------------------
+Billing Summary - Sun Feb 22 18:53:47 2026
+----------------------------------------
+Bulb - 0.24 kWh/day
+Fridge - 12 kWh/day
+
+Total Daily Energy: 12.24 kWh
+Daily Cost: 11.016
+Monthly Cost (30 days): 330.48
