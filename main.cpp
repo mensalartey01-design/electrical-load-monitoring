@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
+// ================= STRUCT =================
 struct Appliance
 {
     string name;
@@ -11,7 +13,9 @@ struct Appliance
 };
 
 vector<Appliance> appliances;
+string FILE_NAME = "appliances.txt";
 
+// ================= MENU =================
 void showMenu()
 {
     cout << "\n===== Electrical Load Monitoring System =====\n";
@@ -24,10 +28,10 @@ void showMenu()
     cout << "Choose option: ";
 }
 
+// ================= REGISTER =================
 void registerAppliance()
 {
     Appliance a;
-
     cout << "Enter appliance name: ";
     getline(cin, a.name);
 
@@ -39,10 +43,10 @@ void registerAppliance()
     cin.ignore();
 
     appliances.push_back(a);
-
     cout << "Appliance added successfully.\n";
 }
 
+// ================= VIEW =================
 void viewAppliances()
 {
     if (appliances.empty())
@@ -56,7 +60,6 @@ void viewAppliances()
     for (int i = 0; i < appliances.size(); i++)
     {
         double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
-
         cout << i + 1 << ". "
              << appliances[i].name << " | "
              << appliances[i].watts << "W | "
@@ -65,6 +68,7 @@ void viewAppliances()
     }
 }
 
+// ================= SEARCH =================
 void searchAppliance()
 {
     string name;
@@ -78,12 +82,10 @@ void searchAppliance()
         if (appliances[i].name == name)
         {
             double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
-
             cout << appliances[i].name << " | "
                  << appliances[i].watts << "W | "
                  << appliances[i].hours << " hrs | "
                  << kwh << " kWh/day\n";
-
             found = true;
         }
     }
@@ -92,6 +94,7 @@ void searchAppliance()
         cout << "Appliance not found.\n";
 }
 
+// ================= CALCULATE BILL =================
 void calculateBill()
 {
     if (appliances.empty())
@@ -106,7 +109,6 @@ void calculateBill()
     cin.ignore();
 
     double totalKwh = 0;
-
     for (int i = 0; i < appliances.size(); i++)
     {
         double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
@@ -115,10 +117,26 @@ void calculateBill()
 
     cout << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
     cout << "Daily Cost: " << totalKwh * tariff << endl;
-    cout << "Estimated Monthly Cost (30 days): "
-         << (totalKwh * tariff * 30) << endl;
+    cout << "Estimated Monthly Cost (30 days): " << totalKwh * tariff * 30 << endl;
 }
 
+// ================= SAVE TO FILE =================
+void saveToFile()
+{
+    ofstream file(FILE_NAME);
+
+    for (int i = 0; i < appliances.size(); i++)
+    {
+        file << appliances[i].name << "|"
+             << appliances[i].watts << "|"
+             << appliances[i].hours << endl;
+    }
+
+    file.close();
+    cout << "Appliances saved successfully.\n";
+}
+
+// ================= MAIN =================
 int main()
 {
     string input;
@@ -136,6 +154,8 @@ int main()
             searchAppliance();
         else if (input == "4")
             calculateBill();
+        else if (input == "5")
+            saveToFile();
         else if (input == "6")
         {
             cout << "Goodbye!\n";
