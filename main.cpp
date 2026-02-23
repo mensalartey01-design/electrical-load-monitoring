@@ -65,6 +65,33 @@ void viewAppliances()
     }
 }
 
+void searchAppliance()
+{
+    string name;
+    cout << "Enter appliance name to search: ";
+    getline(cin, name);
+
+    bool found = false;
+
+    for (int i = 0; i < appliances.size(); i++)
+    {
+        if (appliances[i].name == name)
+        {
+            double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
+
+            cout << appliances[i].name << " | "
+                 << appliances[i].watts << "W | "
+                 << appliances[i].hours << " hrs | "
+                 << kwh << " kWh/day\n";
+
+            found = true;
+        }
+    }
+
+    if (!found)
+        cout << "Appliance not found.\n";
+}
+
 int main()
 {
     string input;
@@ -75,22 +102,18 @@ int main()
         getline(cin, input);
 
         if (input == "1")
-        {
             registerAppliance();
-        }
         else if (input == "2")
-        {
             viewAppliances();
-        }
+        else if (input == "3")
+            searchAppliance();
         else if (input == "6")
         {
             cout << "Goodbye!\n";
             break;
         }
         else
-        {
             cout << "Feature not implemented yet.\n";
-        }
     }
 
     return 0;
