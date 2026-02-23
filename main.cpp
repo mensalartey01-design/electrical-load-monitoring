@@ -4,7 +4,6 @@
 #include <fstream>
 using namespace std;
 
-// ================= STRUCT =================
 struct Appliance
 {
     string name;
@@ -14,6 +13,29 @@ struct Appliance
 
 vector<Appliance> appliances;
 string FILE_NAME = "appliances.txt";
+
+// ================= LOAD FROM FILE =================
+void loadFromFile()
+{
+    ifstream file(FILE_NAME);
+
+    if (!file)
+        return;
+
+    Appliance a;
+
+    while (getline(file, a.name, '|'))
+    {
+        file >> a.watts;
+        file.ignore();
+        file >> a.hours;
+        file.ignore();
+
+        appliances.push_back(a);
+    }
+
+    file.close();
+}
 
 // ================= MENU =================
 void showMenu()
@@ -120,7 +142,7 @@ void calculateBill()
     cout << "Estimated Monthly Cost (30 days): " << totalKwh * tariff * 30 << endl;
 }
 
-// ================= SAVE TO FILE =================
+// ================= SAVE =================
 void saveToFile()
 {
     ofstream file(FILE_NAME);
@@ -139,6 +161,8 @@ void saveToFile()
 // ================= MAIN =================
 int main()
 {
+    loadFromFile(); // Load appliances at startup
+
     string input;
 
     while (true)
