@@ -92,6 +92,33 @@ void searchAppliance()
         cout << "Appliance not found.\n";
 }
 
+void calculateBill()
+{
+    if (appliances.empty())
+    {
+        cout << "No appliances available.\n";
+        return;
+    }
+
+    double tariff;
+    cout << "Enter tariff per kWh: ";
+    cin >> tariff;
+    cin.ignore();
+
+    double totalKwh = 0;
+
+    for (int i = 0; i < appliances.size(); i++)
+    {
+        double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
+        totalKwh += kwh;
+    }
+
+    cout << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
+    cout << "Daily Cost: " << totalKwh * tariff << endl;
+    cout << "Estimated Monthly Cost (30 days): "
+         << (totalKwh * tariff * 30) << endl;
+}
+
 int main()
 {
     string input;
@@ -107,6 +134,8 @@ int main()
             viewAppliances();
         else if (input == "3")
             searchAppliance();
+        else if (input == "4")
+            calculateBill();
         else if (input == "6")
         {
             cout << "Goodbye!\n";
