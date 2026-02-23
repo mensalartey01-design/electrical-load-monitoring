@@ -1,2 +1,4 @@
 Bulb|20|12
 Fridge|500|24
+Rice cooker|1200|1
+Ceiling fan|70|12

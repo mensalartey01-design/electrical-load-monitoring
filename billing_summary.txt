@@ -8,3 +8,15 @@ Fridge - 12 kWh/day
 Total Daily Energy: 12.24 kWh
 Daily Cost: 11.016
 Monthly Cost (30 days): 330.48
+
+----------------------------------------
+Billing Summary - Mon Feb 23 18:54:22 2026
+----------------------------------------
+Bulb - 0.24 kWh/day
+Fridge - 12 kWh/day
+Rice cooker - 1.2 kWh/day
+Ceiling fan - 0.84 kWh/day
+
+Total Daily Energy: 14.28 kWh
+Daily Cost: 12.852
+Monthly Cost (30 days): 385.56
