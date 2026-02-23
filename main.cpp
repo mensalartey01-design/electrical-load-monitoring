@@ -2,6 +2,7 @@
 #include <vector>
 #include <iomanip>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
 struct Appliance
@@ -14,7 +15,7 @@ struct Appliance
 vector<Appliance> appliances;
 string FILE_NAME = "appliances.txt";
 
-// ================= LOAD FROM FILE =================
+// ================= LOAD =================
 void loadFromFile()
 {
     ifstream file(FILE_NAME);
@@ -23,14 +24,12 @@ void loadFromFile()
         return;
 
     Appliance a;
-
     while (getline(file, a.name, '|'))
     {
         file >> a.watts;
         file.ignore();
         file >> a.hours;
         file.ignore();
-
         appliances.push_back(a);
     }
 
@@ -140,6 +139,37 @@ void calculateBill()
     cout << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
     cout << "Daily Cost: " << totalKwh * tariff << endl;
     cout << "Estimated Monthly Cost (30 days): " << totalKwh * tariff * 30 << endl;
+
+    // ============== SAVE BILL SUMMARY =================
+    char choice;
+    cout << "Save billing summary? (y/n): ";
+    cin >> choice;
+    cin.ignore();
+
+    if (choice == 'y' || choice == 'Y')
+    {
+        ofstream file("billing_summary.txt", ios::app);
+        time_t now = time(0);
+
+        file << "\n========================================\n";
+        file << "Billing Summary - " << ctime(&now);
+        file << "----------------------------------------\n";
+
+        for (int i = 0; i < appliances.size(); i++)
+        {
+            double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
+            file << appliances[i].name << " - "
+                 << kwh << " kWh/day\n";
+        }
+
+        file << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
+        file << "Daily Cost: " << totalKwh * tariff << endl;
+        file << "Monthly Cost (30 days): " << totalKwh * tariff * 30 << endl;
+        file << "========================================\n";
+
+        file.close();
+        cout << "Billing summary saved successfully.\n";
+    }
 }
 
 // ================= SAVE =================
@@ -161,7 +191,7 @@ void saveToFile()
 // ================= MAIN =================
 int main()
 {
-    loadFromFile(); // Load appliances at startup
+    loadFromFile();
 
     string input;
 
